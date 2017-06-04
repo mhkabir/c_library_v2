@@ -18,22 +18,22 @@ typedef struct __mavlink_camera_image_captured_t {
  int32_t image_index; /*< Zero based index of this image (image count since armed -1)*/
  uint8_t camera_id; /*< Camera ID (1 for first, 2 for second, etc.)*/
  int8_t capture_result; /*< Boolean indicating success (1) or failure (0) while capturing this image.*/
- char file_url[205]; /*< URL of image taken. Either local storage or http://foo.jpg if camera provides an HTTP interface.*/
+ char file_url[180]; /*< URL of image taken. Either local storage or http://foo.jpg if camera provides an HTTP interface.*/
 }) mavlink_camera_image_captured_t;
 
-#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN 291
-#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN 291
-#define MAVLINK_MSG_ID_263_LEN 291
-#define MAVLINK_MSG_ID_263_MIN_LEN 291
+#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN 266
+#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN 266
+#define MAVLINK_MSG_ID_263_LEN 266
+#define MAVLINK_MSG_ID_263_MIN_LEN 266
 
-#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC 89
-#define MAVLINK_MSG_ID_263_CRC 89
+#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC 241
+#define MAVLINK_MSG_ID_263_CRC 241
 
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_Q_LEN 4
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_ACCELERATION_LEN 3
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_ANGULAR_SPEED_LEN 3
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_MAGNETIC_FIELD_LEN 3
-#define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_FILE_URL_LEN 205
+#define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_FILE_URL_LEN 180
 
 #if MAVLINK_COMMAND_24BIT
 #define MAVLINK_MESSAGE_INFO_CAMERA_IMAGE_CAPTURED { \
@@ -53,7 +53,7 @@ typedef struct __mavlink_camera_image_captured_t {
          { "image_index", NULL, MAVLINK_TYPE_INT32_T, 0, 80, offsetof(mavlink_camera_image_captured_t, image_index) }, \
          { "camera_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 84, offsetof(mavlink_camera_image_captured_t, camera_id) }, \
          { "capture_result", NULL, MAVLINK_TYPE_INT8_T, 0, 85, offsetof(mavlink_camera_image_captured_t, capture_result) }, \
-         { "file_url", NULL, MAVLINK_TYPE_CHAR, 205, 86, offsetof(mavlink_camera_image_captured_t, file_url) }, \
+         { "file_url", NULL, MAVLINK_TYPE_CHAR, 180, 86, offsetof(mavlink_camera_image_captured_t, file_url) }, \
          } \
 }
 #else
@@ -73,7 +73,7 @@ typedef struct __mavlink_camera_image_captured_t {
          { "image_index", NULL, MAVLINK_TYPE_INT32_T, 0, 80, offsetof(mavlink_camera_image_captured_t, image_index) }, \
          { "camera_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 84, offsetof(mavlink_camera_image_captured_t, camera_id) }, \
          { "capture_result", NULL, MAVLINK_TYPE_INT8_T, 0, 85, offsetof(mavlink_camera_image_captured_t, capture_result) }, \
-         { "file_url", NULL, MAVLINK_TYPE_CHAR, 205, 86, offsetof(mavlink_camera_image_captured_t, file_url) }, \
+         { "file_url", NULL, MAVLINK_TYPE_CHAR, 180, 86, offsetof(mavlink_camera_image_captured_t, file_url) }, \
          } \
 }
 #endif
@@ -118,7 +118,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id,
     _mav_put_float_array(buf, 44, acceleration, 3);
     _mav_put_float_array(buf, 56, angular_speed, 3);
     _mav_put_float_array(buf, 68, magnetic_field, 3);
-    _mav_put_char_array(buf, 86, file_url, 205);
+    _mav_put_char_array(buf, 86, file_url, 180);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
 #else
     mavlink_camera_image_captured_t packet;
@@ -135,7 +135,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id,
     mav_array_memcpy(packet.acceleration, acceleration, sizeof(float)*3);
     mav_array_memcpy(packet.angular_speed, angular_speed, sizeof(float)*3);
     mav_array_memcpy(packet.magnetic_field, magnetic_field, sizeof(float)*3);
-    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*205);
+    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*180);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
 #endif
 
@@ -184,7 +184,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack_chan(uint8_t syste
     _mav_put_float_array(buf, 44, acceleration, 3);
     _mav_put_float_array(buf, 56, angular_speed, 3);
     _mav_put_float_array(buf, 68, magnetic_field, 3);
-    _mav_put_char_array(buf, 86, file_url, 205);
+    _mav_put_char_array(buf, 86, file_url, 180);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
 #else
     mavlink_camera_image_captured_t packet;
@@ -201,7 +201,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack_chan(uint8_t syste
     mav_array_memcpy(packet.acceleration, acceleration, sizeof(float)*3);
     mav_array_memcpy(packet.angular_speed, angular_speed, sizeof(float)*3);
     mav_array_memcpy(packet.magnetic_field, magnetic_field, sizeof(float)*3);
-    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*205);
+    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*180);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
 #endif
 
@@ -274,7 +274,7 @@ static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan
     _mav_put_float_array(buf, 44, acceleration, 3);
     _mav_put_float_array(buf, 56, angular_speed, 3);
     _mav_put_float_array(buf, 68, magnetic_field, 3);
-    _mav_put_char_array(buf, 86, file_url, 205);
+    _mav_put_char_array(buf, 86, file_url, 180);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED, buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
 #else
     mavlink_camera_image_captured_t packet;
@@ -291,7 +291,7 @@ static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan
     mav_array_memcpy(packet.acceleration, acceleration, sizeof(float)*3);
     mav_array_memcpy(packet.angular_speed, angular_speed, sizeof(float)*3);
     mav_array_memcpy(packet.magnetic_field, magnetic_field, sizeof(float)*3);
-    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*205);
+    mav_array_memcpy(packet.file_url, file_url, sizeof(char)*180);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED, (const char *)&packet, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
 #endif
 }
@@ -335,7 +335,7 @@ static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t 
     _mav_put_float_array(buf, 44, acceleration, 3);
     _mav_put_float_array(buf, 56, angular_speed, 3);
     _mav_put_float_array(buf, 68, magnetic_field, 3);
-    _mav_put_char_array(buf, 86, file_url, 205);
+    _mav_put_char_array(buf, 86, file_url, 180);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED, buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
 #else
     mavlink_camera_image_captured_t *packet = (mavlink_camera_image_captured_t *)msgbuf;
@@ -352,7 +352,7 @@ static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t 
     mav_array_memcpy(packet->acceleration, acceleration, sizeof(float)*3);
     mav_array_memcpy(packet->angular_speed, angular_speed, sizeof(float)*3);
     mav_array_memcpy(packet->magnetic_field, magnetic_field, sizeof(float)*3);
-    mav_array_memcpy(packet->file_url, file_url, sizeof(char)*205);
+    mav_array_memcpy(packet->file_url, file_url, sizeof(char)*180);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED, (const char *)packet, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
 #endif
 }
@@ -500,7 +500,7 @@ static inline int8_t mavlink_msg_camera_image_captured_get_capture_result(const 
  */
 static inline uint16_t mavlink_msg_camera_image_captured_get_file_url(const mavlink_message_t* msg, char *file_url)
 {
-    return _MAV_RETURN_char_array(msg, file_url, 205,  86);
+    return _MAV_RETURN_char_array(msg, file_url, 180,  86);
 }
 
 /**
