@@ -8707,7 +8707,7 @@ static void mavlink_test_camera_image_captured(uint8_t system_id, uint8_t compon
     mavlink_camera_image_captured_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.time_utc = packet_in.time_utc;
-        packet1.time_boot_ms = packet_in.time_boot_ms;
+        packet1.time_usec = packet_in.time_usec;
         packet1.lat = packet_in.lat;
         packet1.lon = packet_in.lon;
         packet1.alt = packet_in.alt;
@@ -8734,12 +8734,12 @@ static void mavlink_test_camera_image_captured(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_camera_image_captured_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
+    mavlink_msg_camera_image_captured_pack(system_id, component_id, &msg , packet1.time_usec , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
     mavlink_msg_camera_image_captured_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_camera_image_captured_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
+    mavlink_msg_camera_image_captured_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_usec , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
     mavlink_msg_camera_image_captured_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -8752,7 +8752,7 @@ static void mavlink_test_camera_image_captured(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_camera_image_captured_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
+    mavlink_msg_camera_image_captured_send(MAVLINK_COMM_1 , packet1.time_usec , packet1.time_utc , packet1.camera_id , packet1.lat , packet1.lon , packet1.alt , packet1.relative_alt , packet1.q , packet1.acceleration , packet1.angular_speed , packet1.magnetic_field , packet1.image_index , packet1.capture_result , packet1.file_url );
     mavlink_msg_camera_image_captured_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }

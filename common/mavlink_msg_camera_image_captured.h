@@ -6,7 +6,7 @@
 MAVPACKED(
 typedef struct __mavlink_camera_image_captured_t {
  uint64_t time_utc; /*< Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown.*/
- uint32_t time_boot_ms; /*< Timestamp (milliseconds since system boot)*/
+ uint32_t time_usec; /*< Timestamp (microseconds since system boot)*/
  int32_t lat; /*< Latitude, expressed as degrees * 1E7 where image was taken*/
  int32_t lon; /*< Longitude, expressed as degrees * 1E7 where capture was taken*/
  int32_t alt; /*< Altitude in meters, expressed as * 1E3 (AMSL, not WGS84) where image was taken*/
@@ -26,8 +26,8 @@ typedef struct __mavlink_camera_image_captured_t {
 #define MAVLINK_MSG_ID_263_LEN 246
 #define MAVLINK_MSG_ID_263_MIN_LEN 246
 
-#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC 2
-#define MAVLINK_MSG_ID_263_CRC 2
+#define MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC 225
+#define MAVLINK_MSG_ID_263_CRC 225
 
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_Q_LEN 4
 #define MAVLINK_MSG_CAMERA_IMAGE_CAPTURED_FIELD_ACCELERATION_LEN 3
@@ -41,7 +41,7 @@ typedef struct __mavlink_camera_image_captured_t {
     "CAMERA_IMAGE_CAPTURED", \
     14, \
     {  { "time_utc", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_camera_image_captured_t, time_utc) }, \
-         { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_camera_image_captured_t, time_boot_ms) }, \
+         { "time_usec", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_camera_image_captured_t, time_usec) }, \
          { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 12, offsetof(mavlink_camera_image_captured_t, lat) }, \
          { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 16, offsetof(mavlink_camera_image_captured_t, lon) }, \
          { "alt", NULL, MAVLINK_TYPE_INT32_T, 0, 20, offsetof(mavlink_camera_image_captured_t, alt) }, \
@@ -61,7 +61,7 @@ typedef struct __mavlink_camera_image_captured_t {
     "CAMERA_IMAGE_CAPTURED", \
     14, \
     {  { "time_utc", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_camera_image_captured_t, time_utc) }, \
-         { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_camera_image_captured_t, time_boot_ms) }, \
+         { "time_usec", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_camera_image_captured_t, time_usec) }, \
          { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 12, offsetof(mavlink_camera_image_captured_t, lat) }, \
          { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 16, offsetof(mavlink_camera_image_captured_t, lon) }, \
          { "alt", NULL, MAVLINK_TYPE_INT32_T, 0, 20, offsetof(mavlink_camera_image_captured_t, alt) }, \
@@ -84,7 +84,7 @@ typedef struct __mavlink_camera_image_captured_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param time_boot_ms Timestamp (milliseconds since system boot)
+ * @param time_usec Timestamp (microseconds since system boot)
  * @param time_utc Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown.
  * @param camera_id Camera ID (1 for first, 2 for second, etc.)
  * @param lat Latitude, expressed as degrees * 1E7 where image was taken
@@ -101,12 +101,12 @@ typedef struct __mavlink_camera_image_captured_t {
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
+                               uint32_t time_usec, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN];
     _mav_put_uint64_t(buf, 0, time_utc);
-    _mav_put_uint32_t(buf, 8, time_boot_ms);
+    _mav_put_uint32_t(buf, 8, time_usec);
     _mav_put_int32_t(buf, 12, lat);
     _mav_put_int32_t(buf, 16, lon);
     _mav_put_int32_t(buf, 20, alt);
@@ -123,7 +123,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id,
 #else
     mavlink_camera_image_captured_t packet;
     packet.time_utc = time_utc;
-    packet.time_boot_ms = time_boot_ms;
+    packet.time_usec = time_usec;
     packet.lat = lat;
     packet.lon = lon;
     packet.alt = alt;
@@ -149,7 +149,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id,
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param time_boot_ms Timestamp (milliseconds since system boot)
+ * @param time_usec Timestamp (microseconds since system boot)
  * @param time_utc Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown.
  * @param camera_id Camera ID (1 for first, 2 for second, etc.)
  * @param lat Latitude, expressed as degrees * 1E7 where image was taken
@@ -167,12 +167,12 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_camera_image_captured_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint64_t time_utc,uint8_t camera_id,int32_t lat,int32_t lon,int32_t alt,int32_t relative_alt,const float *q,const float *acceleration,const float *angular_speed,const float *magnetic_field,int32_t image_index,int8_t capture_result,const char *file_url)
+                                   uint32_t time_usec,uint64_t time_utc,uint8_t camera_id,int32_t lat,int32_t lon,int32_t alt,int32_t relative_alt,const float *q,const float *acceleration,const float *angular_speed,const float *magnetic_field,int32_t image_index,int8_t capture_result,const char *file_url)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN];
     _mav_put_uint64_t(buf, 0, time_utc);
-    _mav_put_uint32_t(buf, 8, time_boot_ms);
+    _mav_put_uint32_t(buf, 8, time_usec);
     _mav_put_int32_t(buf, 12, lat);
     _mav_put_int32_t(buf, 16, lon);
     _mav_put_int32_t(buf, 20, alt);
@@ -189,7 +189,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack_chan(uint8_t syste
 #else
     mavlink_camera_image_captured_t packet;
     packet.time_utc = time_utc;
-    packet.time_boot_ms = time_boot_ms;
+    packet.time_usec = time_usec;
     packet.lat = lat;
     packet.lon = lon;
     packet.alt = alt;
@@ -219,7 +219,7 @@ static inline uint16_t mavlink_msg_camera_image_captured_pack_chan(uint8_t syste
  */
 static inline uint16_t mavlink_msg_camera_image_captured_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_camera_image_captured_t* camera_image_captured)
 {
-    return mavlink_msg_camera_image_captured_pack(system_id, component_id, msg, camera_image_captured->time_boot_ms, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
+    return mavlink_msg_camera_image_captured_pack(system_id, component_id, msg, camera_image_captured->time_usec, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
 }
 
 /**
@@ -233,14 +233,14 @@ static inline uint16_t mavlink_msg_camera_image_captured_encode(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_camera_image_captured_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_camera_image_captured_t* camera_image_captured)
 {
-    return mavlink_msg_camera_image_captured_pack_chan(system_id, component_id, chan, msg, camera_image_captured->time_boot_ms, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
+    return mavlink_msg_camera_image_captured_pack_chan(system_id, component_id, chan, msg, camera_image_captured->time_usec, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
 }
 
 /**
  * @brief Send a camera_image_captured message
  * @param chan MAVLink channel to send the message
  *
- * @param time_boot_ms Timestamp (milliseconds since system boot)
+ * @param time_usec Timestamp (microseconds since system boot)
  * @param time_utc Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown.
  * @param camera_id Camera ID (1 for first, 2 for second, etc.)
  * @param lat Latitude, expressed as degrees * 1E7 where image was taken
@@ -257,12 +257,12 @@ static inline uint16_t mavlink_msg_camera_image_captured_encode_chan(uint8_t sys
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
+static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan, uint32_t time_usec, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN];
     _mav_put_uint64_t(buf, 0, time_utc);
-    _mav_put_uint32_t(buf, 8, time_boot_ms);
+    _mav_put_uint32_t(buf, 8, time_usec);
     _mav_put_int32_t(buf, 12, lat);
     _mav_put_int32_t(buf, 16, lon);
     _mav_put_int32_t(buf, 20, alt);
@@ -279,7 +279,7 @@ static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan
 #else
     mavlink_camera_image_captured_t packet;
     packet.time_utc = time_utc;
-    packet.time_boot_ms = time_boot_ms;
+    packet.time_usec = time_usec;
     packet.lat = lat;
     packet.lon = lon;
     packet.alt = alt;
@@ -304,7 +304,7 @@ static inline void mavlink_msg_camera_image_captured_send(mavlink_channel_t chan
 static inline void mavlink_msg_camera_image_captured_send_struct(mavlink_channel_t chan, const mavlink_camera_image_captured_t* camera_image_captured)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_camera_image_captured_send(chan, camera_image_captured->time_boot_ms, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
+    mavlink_msg_camera_image_captured_send(chan, camera_image_captured->time_usec, camera_image_captured->time_utc, camera_image_captured->camera_id, camera_image_captured->lat, camera_image_captured->lon, camera_image_captured->alt, camera_image_captured->relative_alt, camera_image_captured->q, camera_image_captured->acceleration, camera_image_captured->angular_speed, camera_image_captured->magnetic_field, camera_image_captured->image_index, camera_image_captured->capture_result, camera_image_captured->file_url);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED, (const char *)camera_image_captured, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
 #endif
@@ -318,12 +318,12 @@ static inline void mavlink_msg_camera_image_captured_send_struct(mavlink_channel
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
+static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_usec, uint64_t time_utc, uint8_t camera_id, int32_t lat, int32_t lon, int32_t alt, int32_t relative_alt, const float *q, const float *acceleration, const float *angular_speed, const float *magnetic_field, int32_t image_index, int8_t capture_result, const char *file_url)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint64_t(buf, 0, time_utc);
-    _mav_put_uint32_t(buf, 8, time_boot_ms);
+    _mav_put_uint32_t(buf, 8, time_usec);
     _mav_put_int32_t(buf, 12, lat);
     _mav_put_int32_t(buf, 16, lon);
     _mav_put_int32_t(buf, 20, alt);
@@ -340,7 +340,7 @@ static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t 
 #else
     mavlink_camera_image_captured_t *packet = (mavlink_camera_image_captured_t *)msgbuf;
     packet->time_utc = time_utc;
-    packet->time_boot_ms = time_boot_ms;
+    packet->time_usec = time_usec;
     packet->lat = lat;
     packet->lon = lon;
     packet->alt = alt;
@@ -364,11 +364,11 @@ static inline void mavlink_msg_camera_image_captured_send_buf(mavlink_message_t 
 
 
 /**
- * @brief Get field time_boot_ms from camera_image_captured message
+ * @brief Get field time_usec from camera_image_captured message
  *
- * @return Timestamp (milliseconds since system boot)
+ * @return Timestamp (microseconds since system boot)
  */
-static inline uint32_t mavlink_msg_camera_image_captured_get_time_boot_ms(const mavlink_message_t* msg)
+static inline uint32_t mavlink_msg_camera_image_captured_get_time_usec(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint32_t(msg,  8);
 }
@@ -513,7 +513,7 @@ static inline void mavlink_msg_camera_image_captured_decode(const mavlink_messag
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     camera_image_captured->time_utc = mavlink_msg_camera_image_captured_get_time_utc(msg);
-    camera_image_captured->time_boot_ms = mavlink_msg_camera_image_captured_get_time_boot_ms(msg);
+    camera_image_captured->time_usec = mavlink_msg_camera_image_captured_get_time_usec(msg);
     camera_image_captured->lat = mavlink_msg_camera_image_captured_get_lat(msg);
     camera_image_captured->lon = mavlink_msg_camera_image_captured_get_lon(msg);
     camera_image_captured->alt = mavlink_msg_camera_image_captured_get_alt(msg);
